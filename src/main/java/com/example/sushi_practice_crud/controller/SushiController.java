@@ -15,7 +15,7 @@ import java.util.UUID;
 @RequestMapping("/api/sushi")
 public class SushiController {
 
-    private SushiService sushiService;
+    private final SushiService sushiService;
 
     public SushiController(SushiService sushiService) {
         this.sushiService = sushiService;

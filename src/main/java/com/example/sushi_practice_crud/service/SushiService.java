@@ -13,7 +13,7 @@ import java.util.UUID;
 @Service
 public class SushiService {
 
-    private SushiRepository sushiRepository;
+    private final SushiRepository sushiRepository;
 
     public SushiService(SushiRepository sushiRepository) {
         this.sushiRepository = sushiRepository;
