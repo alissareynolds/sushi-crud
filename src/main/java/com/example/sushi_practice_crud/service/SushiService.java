@@ -47,4 +47,34 @@ public class SushiService {
         Sushi updatedSushi = new Sushi(id, sushi.getSushiType(), sushi.getFishType(), sushi.getIsSpicy(), sushi.getIsDeconstructed(), sushi.getNumberOfRolls());
         return sushiRepository.save(updatedSushi);
     }
+
+    public Sushi deleteSushi(UUID id) {
+        Optional<Sushi> sushi = sushiRepository.findById(id);
+        if (sushi.isEmpty()) {
+            throw new SushiNotFoundException("A sushi roll with that id was not found.");
+        }
+        sushiRepository.delete(sushi.get());
+        return sushi.get();
+    }
+
+    public Sushi patchSushiById(Sushi sushi, UUID id) {
+        Optional<Sushi> optionalSushi = sushiRepository.findById(id);
+        if (optionalSushi.isEmpty()) {
+            throw new SushiNotFoundException("A sushi roll with that id was not found.");
+        }
+        Sushi updatedSushi = optionalSushi.get();
+        if (updatedSushi.getSushiType() != null) {
+            updatedSushi.setSushiType(sushi.getSushiType());
+        }
+        if (updatedSushi.getFishType() != null) {
+            updatedSushi.setFishType(sushi.getFishType());
+        }
+        if (updatedSushi.getIsSpicy() != null) {
+            updatedSushi.setIsDeconstructed(sushi.getIsDeconstructed());
+        }
+        if (updatedSushi.getNumberOfRolls() != null) {
+            updatedSushi.setNumberOfRolls(sushi.getNumberOfRolls());
+        }
+        return sushiRepository.save(updatedSushi);
+    }
 }

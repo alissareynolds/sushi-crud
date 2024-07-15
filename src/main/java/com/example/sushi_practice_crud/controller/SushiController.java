@@ -52,7 +52,7 @@ public class SushiController {
         return new ResponseEntity<>(sushi, HttpStatus.OK);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<Sushi> updateSushi(@RequestBody Sushi sushi, @PathVariable UUID id) {
         Sushi newSushi;
         try {
@@ -63,6 +63,26 @@ public class SushiController {
         return new ResponseEntity<>(newSushi, HttpStatus.OK);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<Sushi> patchSushiById(@RequestBody Sushi sushi, @PathVariable UUID id) {
+        Sushi newSushi;
+        try {
+            newSushi = sushiService.patchSushiById(sushi, id);
+        } catch (SushiNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(newSushi, HttpStatus.OK);
+    }
+
+
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Sushi> deleteSushiById(@PathVariable )
+    public ResponseEntity<Sushi> deleteSushiById(@PathVariable UUID id) {
+        Sushi sushi;
+        try {
+            sushi = sushiService.deleteSushi(id);
+        } catch (SushiNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(sushi, HttpStatus.OK);
+    }
 }
