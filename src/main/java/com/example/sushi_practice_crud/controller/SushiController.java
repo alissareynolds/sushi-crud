@@ -15,8 +15,11 @@ import java.util.UUID;
 @RequestMapping("/api/sushi")
 public class SushiController {
 
-    @Autowired
-    SushiService sushiService;
+    private SushiService sushiService;
+
+    public SushiController(SushiService sushiService) {
+        this.sushiService = sushiService;
+    }
 
     @PostMapping
     public ResponseEntity<Sushi> createSushi(@RequestBody Sushi sushi) {

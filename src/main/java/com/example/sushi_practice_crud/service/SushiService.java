@@ -4,15 +4,20 @@ import com.example.sushi_practice_crud.exceptions.SushiNotFoundException;
 import com.example.sushi_practice_crud.model.Sushi;
 import com.example.sushi_practice_crud.repository.SushiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 public class SushiService {
 
-    @Autowired
-    SushiRepository sushiRepository;
+    private SushiRepository sushiRepository;
+
+    public SushiService(SushiRepository sushiRepository) {
+        this.sushiRepository = sushiRepository;
+    }
 
     public Sushi create(Sushi sushi) {
         Sushi newSushi = new Sushi(sushi.getSushiType(), sushi.getFishType(), sushi.getIsSpicy(), sushi.getIsDeconstructed(), sushi.getNumberOfRolls());
