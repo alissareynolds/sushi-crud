@@ -3,7 +3,6 @@ package com.example.sushi_practice_crud.service;
 import com.example.sushi_practice_crud.exceptions.SushiNotFoundException;
 import com.example.sushi_practice_crud.model.Sushi;
 import com.example.sushi_practice_crud.repository.SushiRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,43 +19,38 @@ public class SushiService {
     }
 
     public Sushi create(Sushi sushi) {
-        Sushi newSushi = new Sushi(sushi.getSushiType(), sushi.getFishType(), sushi.getIsSpicy(), sushi.getIsDeconstructed(), sushi.getNumberOfRolls());
-        return sushiRepository.save(newSushi);
+        return sushiRepository.save(sushi);
     }
 
-    public List<Sushi> getAllSushi() {
+    public List<Sushi> getAll() {
         return sushiRepository.findAll();
     }
 
-    public Sushi findSushiById(UUID id) {
+    public Sushi getById(UUID id) {
         Optional<Sushi> optionalSushi = sushiRepository.findById(id);
         if (optionalSushi.isEmpty()) {
-            throw new SushiNotFoundException("A sushi roll with that id was not found.");
+            throw new SushiNotFoundException("A sushi roll with id: " + id + " was not found.");
         }
         return optionalSushi.get();
     }
 
-    public Sushi findSushiByType(String sushiType) {
-        Optional<Sushi> optionalSushi = sushiRepository.findBySushiType(sushiType);
-        if (optionalSushi.isEmpty()) {
-            throw new SushiNotFoundException("A sushi roll with that type was not found.");
-        }
-        return optionalSushi.get();
+    public List<Sushi> getByType(String sushiType) {
+       return sushiRepository.findBySushiType(sushiType);
     }
 
-    public Sushi updateSushi(Sushi sushi, UUID id) {
+    public Sushi update(Sushi sushi, UUID id) {
         Optional<Sushi> optionalSushi = sushiRepository.findById(id);
         if (optionalSushi.isEmpty()) {
-            throw new SushiNotFoundException("A sushi roll with that id was not found.");
+            throw new SushiNotFoundException("A sushi roll with id: " + id + " was not found.");
         }
-        Sushi updatedSushi = new Sushi(id, sushi.getSushiType(), sushi.getFishType(), sushi.getIsSpicy(), sushi.getIsDeconstructed(), sushi.getNumberOfRolls());
-        return sushiRepository.save(updatedSushi);
+        sushi.setId(id);
+        return sushiRepository.save(sushi);
     }
 
-    public Sushi patchSushiById(Sushi sushi, UUID id) {
+    public Sushi patch(Sushi sushi, UUID id) {
         Optional<Sushi> optionalSushi = sushiRepository.findById(id);
         if (optionalSushi.isEmpty()) {
-            throw new SushiNotFoundException("A sushi roll with that id was not found.");
+            throw new SushiNotFoundException("A sushi roll with id: " + id + " was not found.");
         }
         Sushi updatedSushi = optionalSushi.get();
         if (sushi.getSushiType() != null) {
@@ -66,6 +60,9 @@ public class SushiService {
             updatedSushi.setFishType(sushi.getFishType());
         }
         if (sushi.getIsSpicy() != null) {
+            updatedSushi.setIsSpicy(sushi.getIsSpicy());
+        }
+        if (sushi.getIsDeconstructed() != null) {
             updatedSushi.setIsDeconstructed(sushi.getIsDeconstructed());
         }
         if (sushi.getNumberOfRolls() != null) {
@@ -74,13 +71,8 @@ public class SushiService {
         return sushiRepository.save(updatedSushi);
     }
 
-    public Sushi deleteSushi(UUID id) {
-        Optional<Sushi> sushi = sushiRepository.findById(id);
-        if (sushi.isEmpty()) {
-            throw new SushiNotFoundException("A sushi roll with that id was not found.");
-        }
-        sushiRepository.delete(sushi.get());
-        return sushi.get();
+    public void delete(UUID id) {
+        sushiRepository.deleteById(id);
     }
 
 

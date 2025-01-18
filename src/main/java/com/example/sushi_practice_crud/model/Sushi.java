@@ -1,11 +1,15 @@
 package com.example.sushi_practice_crud.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "sushi")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Sushi {
 
     @Id
@@ -22,27 +26,6 @@ public class Sushi {
 
     private Integer numberOfRolls;
 
-    public Sushi() {
-
-    }
-
-    public Sushi(UUID id, String sushiType, String fishType, Boolean isSpicy, Boolean isDeconstructed, Integer numberOfRolls) {
-        this.id = id;
-        this.sushiType = sushiType;
-        this.fishType = fishType;
-        this.isSpicy = isSpicy;
-        this.isDeconstructed = isDeconstructed;
-        this.numberOfRolls = numberOfRolls;
-    }
-
-    public Sushi(String sushiType, String fishType, Boolean isSpicy, Boolean isDeconstructed, Integer numberOfRolls) {
-        this.sushiType = sushiType;
-        this.fishType = fishType;
-        this.isSpicy = isSpicy;
-        this.isDeconstructed = isDeconstructed;
-        this.numberOfRolls = numberOfRolls;
-    }
-
     public UUID getId() {
         return id;
     }
@@ -50,7 +33,6 @@ public class Sushi {
     public void setId(UUID id) {
         this.id = id;
     }
-
 
     public String getSushiType() {
         return sushiType;
