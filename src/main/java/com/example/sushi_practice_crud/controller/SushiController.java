@@ -43,7 +43,7 @@ public class SushiController {
         return new ResponseEntity<>(sushi, HttpStatus.OK);
     }
 
-    @GetMapping("/name/{name}")
+    @GetMapping("/type/{sushiType}")
     public ResponseEntity<List<Sushi>> getSushiByType(@PathVariable String sushiType) {
         List<Sushi> sushiList = sushiService.getByType(sushiType);
         return new ResponseEntity<>(sushiList, HttpStatus.OK);
